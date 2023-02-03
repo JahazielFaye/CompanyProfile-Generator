@@ -1,126 +1,95 @@
-// Manager card
-const generateManager = function (manager) {
-  return `
-    <div class="col-4 mt-4">
-        <div class="card h-100">
-            <div class="card-header">
-                <h3>${manager.name}</h3>
-                <h4><i class="fa-duotone fa-users"></i>Manager</h4>
-            </div>
-            <div class="card-body">
-                <p class="id">ID: ${manager.id}</p>
-                <p class="email">Email: <a href="mailto:${manager.email}">${manager.email}</a></p>
-                <p class="office">Office Number: ${manager.officeNumber}</p>
-            </div>
-        </div>
-    </div>
-    `;
+const fs = require("fs");
+
+const Manager = require("../lib/manager");
+const Intern = require("../lib/intern");
+const Engineer = require("../lib/engineer");
+
+data = {
+    manager: new Manager("Mike Rain", 3, "mike@m.com", 765),
+    interns: [
+        new Intern("Faye Kieth", 423, "faye@m.com", "University of Cent"),
+    ],
+    engineers: [
+        new Engineer("Marcus Mills", 231, "marcs@m.com", "github"),
+    ],
 };
 
-// Engineer card
-const generateEngineer = function (engineer) {
-  return `
-    <div class="col-4 mt-4">
-        <div class="card h-100">
-            <div class="card-header">
-                <h3>${engineer.name}</h3>
-                <h4><i class="fa-regular fa-laptop-code"></i>Engineer</h4>
-            </div>
-            <div class="card-body">
-                <p class="id">ID: ${engineer.id}</p>
-                <p class="email">Email: <a href="mailto:${engineer.email}">${engineer.email}</a></p>
-                <p class="github">Github: <a href="https://github.com/${engineer.github}">${engineer.github}</a></p>
-            </div>
-        </div>
-    </div>
-    `;
-};
-
-// Intern card
-const generateIntern = function (intern) {
-  return `
-    <div class="col-4 mt-4">
-        <div class="card h-100">
-            <div class="card-header">
-                <h3>${intern.name}</h3>
-                <h4><i class="fa-solid fa-graduation-cap"></i>Intern</h4>
-            </div>
-            <div class="card-body">
-                <p class="id">ID: ${intern.id}</p>
-                <p class="email">Email:<a href="mailto:${intern.email}">${intern.email}</a></p>
-                <p class="school">School: ${intern.school}</p>
-            </div>
-    </div>
-</div>
-    `;
-};
-
-// Array for cards
-generateHTML = (data) => {
-  pageArray = [];
-
-  for (let i = 0; i < data.length; i++) {
-    const employee = data[i];
-    const role = employee.getRole();
-    if (role === "Manager") {
-      const managerCard = generateManager(employee);
-
-      pageArray.push(managerCard);
+function generateHTML(fileName, data) {
+    let html = ` <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://fonts.googleapis.com/css2?family=Astloch&family=Noto+Sans+TC:wght@400;900&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+        <link rel="stylesheet" href="style.css">
+        <title>Team Profile</title>
+        
+    </head>
+    <body>
+    <header>
+            <nav class="navbar" id="navbar">
+                <span class="navbar-brand mb-0 h1 w-100 text-center" id="navbar-text">Team Profile</span>
+            </nav>
+        </header>
+        <div
+        style="
+            height: 1000px;
+            background-color: purple;
+            padding-top:50px;
+            align-items: center;
+        "
+    >
+    <div style="width: 1500px; height: auto; position: relative; margin: 0 auto;"></div>` ;
+    
+    html += '<div class="row row-cols-2 row-cols-md-4 g-4">'
+    html = html + employeeHTML(data.manager);
+    for(let intern of data.interns) {
+        html += employeeHTML(intern)
     }
-    if (role === "Engineer") {
-      const engineerCard = generateEngineer(employee);
-
-      pageArray.push(engineerCard);
+    for(let engineer of data.engineers) {
+        html += employeeHTML(engineer)
     }
-    if (role === "Intern") {
-      const internCard = generateIntern(employee);
+    html += '</div>'
+    
+html += "</div> </body><script src='https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js'></script></html>";
+fs.writeFile(fileName, html, (err) =>
+err ? console.error(err) : console.log("Your Index.html is created!"));
+} 
 
-      pageArray.push(internCard);
-    }
-  }
+function employeeHTML(employee) {
+    let html = `
+    <div class="col"><div class="card shadow p-3 mb-5 bg-body rounded"><div class="card-body">
+    <h3 class="card-title">${employee.getName()}</h3>
+    <h6 class="card-subtitle mb-2 text-muted">${employee.getRole()}</h6>
+    <hr class="border border-primary border-2 opacity-50"></hr>
+    <p class="card-text">
+    <small class="text-muted">ID</small><br>
+    ${employee.getId()}
+    </p>
+    <p class="card-text">
+    <small class="text-muted">EMAIL</small><br>
+    ${employee.getEmail()}
+    </p>
+    `;
+    if (employee.getRole() === "Manager") {
+        html += `<p class="card-text">
+        <small class="text-muted">OFFICE</small><br>
+        ${employee.officeNumber}
+        </p>`;
+ } else if (employee.getRole() === "Intern") {
+    html += `<p class="card-text">
+    <small class="text-muted">SCHOOL</small><br>
+    ${employee.school}
+    </p>`;
+} else if (employee.getRole() === "Engineer") {
+    html += `<p class="card-text">
+    <small class="text-muted">GITHUB</small><br>
+    ${employee.github}
+    </p>`;
+}
+html += `</div></div></div>`;
+return html;
+}
 
-  const employeeCards = pageArray.join("");
-  const generateTeam = generateTeamPage(employeeCards);
-  return generateTeam;
-};
-
-// Generate HTML page
-const generateTeamPage = function (employeeCards) {
-  return `
-  <!DOCTYPE html>
-  <html lang="en">
-  <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Team Roster</title>
-      <link href="https://fonts.googleapis.com/css2?family=Astloch&family=Noto+Sans+TC:wght@400;900&display=swap" rel="stylesheet">
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-      <script src="https://kit.fontawesome.com/a8c7620e6d.js" crossorigin="anonymous"></script>
-      <link rel="stylesheet" href="style.css">
-      
-  </head>
-  <body>
-      <header>
-          <nav class="navbar" id="navbar">
-              <span class="navbar-brand mb-0 h1 w-100 text-center" id="navbar-text">Team Profile</span>
-          </nav>
-      </header>
-      <main>
-          <div class="container">
-              <div class="row justify-content-center" id="team-cards">
-                  <!--Team Cards-->
-                  ${employeeCards}
-              </div>
-          </div>
-      </main>
-      
-  </body>
-     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-  </html>
-`;
-};
-
-// Export
-module.exports = generateHTML;
+module.exports = {generateHTML, data};

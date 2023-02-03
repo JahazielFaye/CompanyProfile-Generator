@@ -3,19 +3,24 @@ const Intern = require("./lib/intern");
 const Engineer = require("./lib/engineer");
 const Manager = require("./lib/manager");
 
-const { TESTDATA, generateHTML } = require("./src/render");
+const { generateHTML, data} = require("./src/renderhtml");
 
-//Object to store manager, interns and engineer
+// Object to store manager, interns and engineer
 let employees = {
   manager: null,
-  interns: [],
-  engineers: [],
+
 };
 
-//function to start the prompt for user inputs
+// function to start the prompt for user inputs
 const start = () => {
   inquirer
     .prompt([
+      {
+        type: "list",
+        message: "Welcome! Adding New Employee To The Team?",
+        choices: ["Add Intern", "Add Engineer", "Done!"],
+        name: "newEmployee",
+      },
       {
         type: "input",
         message: "Hi, Please Enter your Teams Manager's Name: ",
@@ -35,12 +40,6 @@ const start = () => {
         type: "input",
         message: "Please Enter Employee's Office Number: ",
         name: "officeNum",
-      },
-      {
-        type: "list",
-        message: "Add New Employee?",
-        choices: ["Add Intern", "Add Engineer", "Done!"],
-        name: "newEmployee",
       },
     ])
     .then((input) => {
@@ -97,14 +96,19 @@ const addIntern = () => {
       },
       {
         type: "list",
-        message: "Would you like to add another employe?",
+        message: "Add Another Employee?",
         choices: ["Add Intern", "Add Engineer", "Done"],
         name: "addnewEmployee",
       },
     ])
     .then((input) => {
         //Create Intern Object and store in employees
-      let intern = new Intern(input.name, input.id, input.email, input.school);
+      let intern = new Intern(
+        input.name, 
+        input.id,
+         input.email,
+          input.school
+          );
       employees.interns.push(intern);
       menuChoice(input.addnewEmployee);
     });
@@ -130,12 +134,12 @@ const addEngineer = () => {
       },
       {
         type: "input",
-        message: "Enter Your Employee's Github prof: ",
+        message: "Enter Your Employee's Github Profile: ",
         name: "GitHub",
       },
       {
         type: "list",
-        message: "Would you like to add another employe?",
+        message: "Add Another Employee?",
         choices: ["Add Intern", "Add Engineer", "Done"],
         name: "addnewEmployee",
       },
@@ -151,3 +155,5 @@ const addEngineer = () => {
       menuChoice(input.addnewEmployee);
     });
 };
+
+start();
