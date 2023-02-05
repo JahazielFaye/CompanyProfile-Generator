@@ -92,4 +92,4 @@ html += `</div></div></div>`;
 return html;
 }
 
-module.exports = {generateHTML, data};
+module.exports = { generateHTML, data };
