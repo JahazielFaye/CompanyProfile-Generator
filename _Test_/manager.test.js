@@ -1,20 +1,21 @@
-const Manager = require('../lib/manager')
+const Employee = require('../lib/Employee');
+const Manager = require('../lib/Manager');
 
 
-describe("Manager",() => {
-    it("should initialize and have a Manager role", () => {
-        let name = "Michael";
-        let id = 1
-        let email = "mc@email.com"
-        let role = "Manager"
-        let officNumb = 432
+test('creates a manager object', () => {
+    const manager = new Manager('Manager1');
 
-        let manager = new Manager(name, id, email, officNumb)
+    expect(typeof(manager)).toBe('object');
+});
 
-        expect(manager.name).toEqual(name)
-        expect(manager.id).toEqual(id)
-        expect(manager.email).toEqual(email)
-        expect(manager.getRole()).toEqual(role)
-        expect(manager.officeNumber).toEqual(officNumb)
-    })
-})
+test('gets office number', () => {
+    const manager = new Manager('Manager', '1', 'Fayekeith@m.com', '7');
+
+    expect(manager.getOfficeNumber()).toBe('7');
+});
+
+test('getRole() returns Manager', () => {
+    const manager = new Manager('Manager');
+
+    expect(manager.getRole()).toBe('Manager');
+});

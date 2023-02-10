@@ -1,22 +1,20 @@
-const Intern = require("../lib/intern");
-const intern = new Intern("Lily", "4", "li2@email.com", "University of Central Florida")
+const Employee = require('../lib/Employee');
+const Intern = require('../lib/Intern');
 
-test("getName function returns name", () => {
-    expect(intern.getName()).toBe("Lily");
-})
+test('creates an Intern object', () => {
+    const intern = new Intern('Intern1');
 
-test("getId function returns Id", () => {
-    expect(intern.getId()).toBe("4");
-})
+    expect(typeof(intern)).toBe('object');
+});
 
-test("getEmail function returns email", () => {
-    expect(intern.getEmail()).toBe("li2@email.com");
-})
+test("gets Intern's school", () => {
+    const intern = new Intern('Intern', '2', 'email', 'school1');
 
-test("getRole function returns role", () => {
-    expect(intern.getRole()).toBe("Intern");
-}
-)
-test("getGithub function returns github", () => {
-    expect(intern.getSchool()).toBe("University of Central Florida");
-})
+    expect(intern.school).toBe('school1');
+});
+
+test('getRole() returns Intern', () => {
+    const intern = new Intern('Intern');
+
+    expect(intern.getRole()).toBe('Intern');;
+});

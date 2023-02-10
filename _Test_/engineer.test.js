@@ -1,22 +1,21 @@
-const Engineer = require("../lib/engineer");
-const engineer = new Engineer("Sufri", "9", "suf@email.com", "suf1a");
+const Employee = require('../lib/Employee');
+const Engineer = require('../lib/Engineer');
+const { test } = require('@jest/globals');
 
-test("getName function returns name", () => {
-    expect(engineer.getName()).toBe("Sufri");
-})
+test('creates an engineer object', () => {
+    const engineer = new Engineer('Engineer1');
 
-test("getId function returns id", () => {
-    expect(engineer.getId()).toBe("9");
-})
+    expect(typeof(engineer)).toBe('object');
+});
 
-test("getEmail function returns email", () => {
-    expect(engineer.getEmail()).toBe("suf@email.com");
-})
+test('gets github username', () => {
+    const engineer = new Engineer('Manager', '1', 'Fayekeith@m.com', 'fayegithub');
 
-test("getRole function returns role", () => {
-    expect(engineer.getRole()).toBe("Engineer");
-}
-)
-test("getGithub function returns github", () => {
-    expect(engineer.getGithub()).toBe("suf1a");
-})
+    expect(engineer.github).toBe('fayegithub');
+});
+
+test('getRole() returns Engineer', () => {
+    const engineer = new Engineer('Manager1');
+
+    expect(engineer.getRole()).toBe('Engineer');
+});
