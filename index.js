@@ -1,145 +1,128 @@
-const inquirer = require("inquirer");
-const Intern = require("./lib/intern");
-const Engineer = require("./lib/engineer");
-const Manager = require("./lib/manager");
+// importing required Packages
+const Intern = require('../lib/Intern');
+const Manager = require('../lib/Manager');
+const Engineer = require('../lib/Engineer');
+// const Prompt = require('index.js');
 
-const { generateHTML, dataTest} = require("./src/renderhtml");
-
-// Object to store manager, interns and engineer
-teamArray = [];
-
-// function to start the prompt for user inputs
-const start = () => {
-  inquirer
-    .prompt([
-      {
-        type: "list",
-        message: "Welcome! Adding New Employee To The Team?",
-        choices: ["Add Intern", "Add Engineer", "Done with Team Building!"],
-        name: "newEmployee",
-      },
-      {
-        type: "input",
-        message: "Hi, First Please Enter your Teams Manager's Name: ",
-        name: "name",
-      },
-      {
-        type: "input",
-        message: "Please Enter Employee's ID: ",
-        name: "id",
-      },
-      {
-        type: "input",
-        message: "Please Enter Employee's E-mail: ",
-        name: "email",
-      },
-      {
-        type: "input",
-        message: "Please Enter Employee's Office Number: ",
-        name: "officeNum",
-      },
-    ])
-    .then((input) => {
-        //create Manager object and store in employees
-      let manager = new Manager(
-        input.name,
-        input.id,
-        input.email,
-        input.officeNum
-      );
-      teamArray.manager = manager;
-      //call menuchoice with the user's selected option
-      menuChoice(input.newEmployee);
-    });
+// Function to Generate manager cards
+const generateManager = managerTitle => { return managerTitle.map(manager => { 
+        return `<div class="col">
+        <div class="card shadow-lg" style="width: 18rem;">
+            <div class="card-body identity">
+                <h5 class="card-title">${manager.getName()}</h5>
+                <h6 class="card-title"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                        fill="currentColor" class="bi bi-cup-fill" viewBox="0 0 16 16">
+                        <path
+                            d="M1 2a1 1 0 0 1 1-1h11a1 1 0 0 1 1 1v1h.5A1.5 1.5 0 0 1 16 4.5v7a1.5 1.5 0 0 1-1.5 1.5h-.55a2.5 2.5 0 0 1-2.45 2h-8A2.5 2.5 0 0 1 1 12.5V2zm13 10h.5a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.5-.5H14v8z" />
+                    </svg> Manager</h6>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Id: ${manager.getId()}</li>
+                <li class="list-group-item">Email: <a href="mailto:">${manager.getEmail()}</a></li>
+                <li class="list-group-item">Office number: ${manager.getOfficeNumber()}</li>
+            </ul>
+        </div>
+    </div>`
+    }
+    ).join('');
 };
 
-//Function to handle user choice to add employee or generate html
-const menuChoice = (choice) => {
-  console.log(choice);
-  console.log(teamArray);
-//Call the proper function based on the user's choice
-  if (choice === "Add Intern") {
-    addIntern();
-  } else if (choice === "Add Engineer") {
-    addEngineer();
-  } else {
-    generateHTML("index.html", dataTest);
+// Generates intern card
+const generateIntern = internTitle => { return internTitle.map( intern => {
+  return `<div class="col">
+  <div class="card shadow-lg" style="width: 18rem;">
+      <div class="card-body identity">
+          <h5 class="card-title">${intern.getName()}</h5>
+          <h6 class="card-title"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+          <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+        </svg>  Intern</h6>
+      </div>
+      <ul class="list-group list-group-flush">
+          <li class="list-group-item">Id: ${intern.getId()}</li>
+          <li class="list-group-item">Email: <a href="mailto:">${intern.getEmail()}</a></li>
+          <li class="list-group-item">School: ${intern.getSchool()}</li>
+      </ul>
+  </div>
+  </div>`
   }
+  ).join('');
 };
 
-//Function to add intern employee
-const addIntern = () => {
-  inquirer
-    .prompt([
-      {
-        type: "input",
-        message: "Enter Your Intern's Name: ",
-        name: "name",
-      },
-      {
-        type: "input",
-        message: "Enter Your Employee's ID: ",
-        name: "id",
-      },
-      {
-        type: "input",
-        message: "Enter Your Employee's E-mail: ",
-        name: "email",
-      },
-      {
-        type: "input",
-        message: "Enter Your Intern's School: ",
-        name: "school",
-      },
-      {
-        type: "list",
-        message: "Add Another Employee?",
-        choices: ["Add Intern", "Add Engineer", "Done"],
-        name: "addnewEmployee",
-      },
-    ])
-   
-    .then((input) => {
-      let intern = new Intern(input.name, input.id, input.email, input.school)
-      teamArray.push(intern)
-      menuChoice(input.addnewEmployee)
+
+const generateEngineer = engineerTitle => { return engineerTitle.map(engineer => {
+  return `<div class="col">
+  <div class="card shadow-lg" style="width: 18rem;">
+      <div class="card-body identity">
+          <h5 class="card-title">${engineer.getName()}</h5>
+          <h6 class="card-title"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-wrench" viewBox="0 0 16 16">
+              <path d="M.102 2.223A3.004 3.004 0 0 0 3.78 5.897l6.341 6.252A3.003 3.003 0 0 0 13 16a3 3 0 1 0-.851-5.878L5.897 3.781A3.004 3.004 0 0 0 2.223.1l2.141 2.142L4 4l-1.757.364L.102 2.223zm13.37 9.019.528.026.287.445.445.287.026.529L15 13l-.242.471-.026.529-.445.287-.287.445-.529.026L13 15l-.471-.242-.529-.026-.287-.445-.445-.287-.026-.529L11 13l.242-.471.026-.529.445-.287.287-.445.529-.026L13 11l.471.242z"/>
+            </svg>  Engineer</h6>
+      </div>
+      <ul class="list-group list-group-flush">
+          <li class="list-group-item">Id: ${engineer.getId()}</li>
+          <li class="list-group-item">Email: <a href="mailto:">${engineer.getEmail()}</a></li>
+          <li class="list-group-item">GitHub: <a target="_blank" href="https://github.com/${engineer.getGithub()}">${engineer.getGithub()}</a></li>
+      </ul>
+  </div>
+</div>`
+}).join('');
+};
+
+// Generates cards for team members
+const generateCards = teamArray => {
+  let cardsArray = [];
+
+  // Filter team members by their role
+  const managerTitle = teamArray.filter(team => {
+      return team.getRole() === 'Manager';
   });
+  const engineerTitle = teamArray.filter(team => {
+      return team.getRole() === 'Engineer';
+  });
+  const internTitle = teamArray.filter(team => {
+      return team.getRole() === 'Intern';
+  });
+
+  // If there are managers, add their cards to the cards array
+  if (managerTitle) {
+      cardsArray.push(generateManager(managerTitle));
+  } 
+  // If there are engineers, add their cards to the cards array
+  if (engineerTitle) {
+      cardsArray.push(generateEngineer(engineerTitle));
+  } 
+  // If there are interns, add their cards to the cards array
+  if (internTitle) {
+      cardsArray.push(generateIntern(internTitle));
+  }
+  // Return all cards as a single string
+  return cardsArray.join('');
 };
 
-const addEngineer = () => {
-  inquirer
-    .prompt([
-      {
-        type: "input",
-        message: "Enter Your Engineer's Name: ",
-        name: "name",
-      },
-      {
-        type: "input",
-        message: "Enter Your Employee's ID: ",
-        name: "id",
-      },
-      {
-        type: "input",
-        message: "Enter Your Employee's E-mail: ",
-        name: "email",
-      },
-      {
-        type: "input",
-        message: "Enter Your Employee's Github Profile: ",
-        name: "github",
-      },
-    ])
-    .then((input) => {
-      let engineer = new Engineer(
-        input.name,
-        input.id,
-        input.email,
-        input.github
-      )
-      teamArray.push(engineer)
-      menuChoice(input.addnewEmployee);
-    });
-};
-
-start();
+// Generates HTML Page
+module.exports = cardsArray => {
+  return ` 
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>My Team</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+</head>
+<body>
+    <header>
+        <h1>My Team</h1>
+    </header>
+    <main class="container my-5">
+        <div class="row">
+            ${generateCards(cardsArray)}
+        </div>
+    </main>
+</body>
+</html>
+    `;
+  };
