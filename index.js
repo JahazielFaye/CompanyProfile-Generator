@@ -3,13 +3,10 @@ const Intern = require("./lib/intern");
 const Engineer = require("./lib/engineer");
 const Manager = require("./lib/manager");
 
-const { generateHTML, data} = require("./src/renderhtml");
+const { generateHTML, dataTest} = require("./src/renderhtml");
 
 // Object to store manager, interns and engineer
-let employees = {
-  manager: null,
-
-};
+teamArray = [];
 
 // function to start the prompt for user inputs
 const start = () => {
@@ -18,12 +15,12 @@ const start = () => {
       {
         type: "list",
         message: "Welcome! Adding New Employee To The Team?",
-        choices: ["Add Intern", "Add Engineer", "Done!"],
+        choices: ["Add Intern", "Add Engineer", "Done with Team Building!"],
         name: "newEmployee",
       },
       {
         type: "input",
-        message: "Hi, Please Enter your Teams Manager's Name: ",
+        message: "Hi, First Please Enter your Teams Manager's Name: ",
         name: "name",
       },
       {
@@ -34,7 +31,7 @@ const start = () => {
       {
         type: "input",
         message: "Please Enter Employee's E-mail: ",
-        name: "E-mail",
+        name: "email",
       },
       {
         type: "input",
@@ -50,7 +47,7 @@ const start = () => {
         input.email,
         input.officeNum
       );
-      employees.manager = manager;
+      teamArray.manager = manager;
       //call menuchoice with the user's selected option
       menuChoice(input.newEmployee);
     });
@@ -59,14 +56,14 @@ const start = () => {
 //Function to handle user choice to add employee or generate html
 const menuChoice = (choice) => {
   console.log(choice);
-  console.log(employees);
+  console.log(teamArray);
 //Call the proper function based on the user's choice
   if (choice === "Add Intern") {
     addIntern();
   } else if (choice === "Add Engineer") {
     addEngineer();
   } else {
-    generateHTML("index.html", employees);
+    generateHTML("index.html", dataTest);
   }
 };
 
@@ -82,17 +79,17 @@ const addIntern = () => {
       {
         type: "input",
         message: "Enter Your Employee's ID: ",
-        name: "ID",
+        name: "id",
       },
       {
         type: "input",
         message: "Enter Your Employee's E-mail: ",
-        name: "E-mail",
+        name: "email",
       },
       {
         type: "input",
         message: "Enter Your Intern's School: ",
-        name: "School",
+        name: "school",
       },
       {
         type: "list",
@@ -101,17 +98,12 @@ const addIntern = () => {
         name: "addnewEmployee",
       },
     ])
+   
     .then((input) => {
-        //Create Intern Object and store in employees
-      let intern = new Intern(
-        input.name, 
-        input.id,
-         input.email,
-          input.school
-          );
-      employees.interns.push(intern);
-      menuChoice(input.addnewEmployee);
-    });
+      let intern = new Intern(input.name, input.id, input.email, input.school)
+      teamArray.push(intern)
+      menuChoice(input.addnewEmployee)
+  });
 };
 
 const addEngineer = () => {
@@ -130,18 +122,12 @@ const addEngineer = () => {
       {
         type: "input",
         message: "Enter Your Employee's E-mail: ",
-        name: "E-mail",
+        name: "email",
       },
       {
         type: "input",
         message: "Enter Your Employee's Github Profile: ",
-        name: "GitHub",
-      },
-      {
-        type: "list",
-        message: "Add Another Employee?",
-        choices: ["Add Intern", "Add Engineer", "Done"],
-        name: "addnewEmployee",
+        name: "github",
       },
     ])
     .then((input) => {
@@ -150,8 +136,8 @@ const addEngineer = () => {
         input.id,
         input.email,
         input.github
-      );
-      employees.engineers.push(engineer);
+      )
+      teamArray.push(engineer)
       menuChoice(input.addnewEmployee);
     });
 };
