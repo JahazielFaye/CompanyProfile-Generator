@@ -1,18 +1,33 @@
-const Employee = require("../lib/employee")
-const employee = new Employee("Faye", "7", "faye@email.com")
+const { expect } = require('@jest/globals');
+const Employee = require('../lib/Employee');
 
-test("getname function returns name", () => {
-    expect(employee.getName()).toBe("Faye");
-})
+// Test case to check if the employee object is created successfully
+test('creates an Employee object', () => {
+    const employee = new Employee();
+    // Checking if the type of the object is object
+    expect(typeof(employee)).toBe("object");
+});
+// Test case to check if the employee's name is retrieved successfully
+test("gets employee's name", () => {
+    const employee = new Employee('Employee1');
+    // Checking if the name of the employee is returned as expected
+    expect(employee.getName()).toBe('Employee1');
+});
 
-test("getId function returns Id", () => {
-    expect(employee.getId()).toBe("7");
-})
+test("gets employee's id", () => {
+    const employee = new Employee('Employee1', '1');
 
-test("getemail function returns email", () => {
-    expect(employee.getEmail()).toBe("faye@email.com");
-})
+    expect(employee.getId()).toBe('1');
+});
 
-test("getrole function returns role", ()=> {
-    expect(employee.getRole()).toBe("Employee");
-})
+test("get employee's email", () => {
+    const employee = new Employee('Employee1', '1', 'noemiegrau@outlook.fr');
+
+    expect(employee.getEmail()).toBe('noemiegrau@outlook.fr');
+});
+
+test("getRole() returns Employee", () => {
+    const employee = new Employee('Employee');
+
+    expect(employee.getRole()).toBe('Employee');
+});

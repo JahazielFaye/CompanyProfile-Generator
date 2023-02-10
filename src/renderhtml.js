@@ -1,90 +1,133 @@
-const fs = require("fs");
+// Packages
+const Intern = require('../lib/Intern');
+const Manager = require('../lib/Manager');
+const Engineer = require('../lib/Engineer');
+// const Prompt = require('index.js');
 
-const Manager = require("../lib/manager");
-const Intern = require("../lib/intern");
-const Engineer = require("../lib/engineer");
-
-dataTest = {
-    manager: new Manager("Michael Scott", 3, "mike@m.com", 113),
-    interns: [
-        new Intern("Faye Kieth", 23, "faye@m.com", "University of Central Florida"),
-        new Intern("Asher Lee", 34, "Alee@m.com", "FSU"),
-    ],
-    engineers: [
-        new Engineer("Marcus Mills", 231, "marcs@m.com", "marcusmil"),
-    ],
+// Generates a card for a manager
+const generateManager = managerTitle => { 
+    // Return an array of HTML strings, one for each manager
+    return managerTitle.map(manager => { 
+      // Return an HTML string for a single manager card
+      return `<div class="col">
+      <div class="card shadow-lg" style="width: 18rem;">
+          <!-- The header of the manager card -->
+          <div class="card-body identity">
+              <h5 class="card-title">${manager.getName()}</h5>
+              <h6 class="card-title">
+                <!-- Icon indicating that this is a manager card -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cup-fill" viewBox="0 0 16 16">
+                  <path d="M1 2a1 1 0 0 1 1-1h11a1 1 0 0 1 1 1v1h.5A1.5 1.5 0 0 1 16 4.5v7a1.5 1.5 0 0 1-1.5 1.5h-.55a2.5 2.5 0 0 1-2.45 2h-8A2.5 2.5 0 0 1 1 12.5V2zm13 10h.5a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.5-.5H14v8z" />
+                </svg> 
+                Manager
+              </h6>
+          </div>
+          <!-- List of information about the manager -->
+          <ul class="list-group list-group-flush">
+              <li class="list-group-item">Id: ${manager.getId()}</li>
+              <li class="list-group-item">Email: <a href="mailto:">${manager.getEmail()}</a></li>
+              <li class="list-group-item">Office number: ${manager.getOfficeNumber()}</li>
+          </ul>
+      </div>
+  </div>`
+    // Join the HTML strings in the array into a single string
+    }).join('');
+  };
+  
+  // Generates intern card
+const generateIntern = internTitle => { return internTitle.map( intern => {
+    return `<div class="col">
+    <div class="card shadow-lg" style="width: 18rem;">
+        <div class="card-body identity">
+            <h5 class="card-title">${intern.getName()}</h5>
+            <h6 class="card-title"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+          </svg>  Intern</h6>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Id: ${intern.getId()}</li>
+            <li class="list-group-item">Email: <a href="mailto:">${intern.getEmail()}</a></li>
+            <li class="list-group-item">School: ${intern.getSchool()}</li>
+        </ul>
+    </div>
+    </div>`
+    }
+    ).join('');
 };
 
-function generateHTML(fileName, data) {
-    let html = ` <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="https://fonts.googleapis.com/css2?family=Astloch&family=Noto+Sans+TC:wght@400;900&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="styles.css">
-        <title>Team Profile</title>
-        
-    </head>
-    <body style="background: rgb(228,236,239);
-    background: radial-gradient(circle, rgba(228,236,239,1) 2%, rgba(179,174,238,1) 41%, rgba(9,67,136,1) 100%);">
-    <header>
-    <nav class="navbar" id="navbar" style="background-color: #e4ecef; height: 60px;">
-    <span class="navbar-brand mb-0 h1 w-100 text-center" id="navbar-text" style="color: #094388; font-size: 23px;">Team Profile</span>
-  </nav>
-  
-    </header>
-`;
-    
-    html += '<div class="row row-cols-2 row-cols-md-4 g-4" style="margin-top: 20px; box-shadow: 0px 0px 10px #ccc;">'
-    html = html + employeeHTML(data.manager);
-    for(let intern of data.interns) {
-        html += employeeHTML(intern)
-    }
-    for(let engineer of data.engineers) {
-        html += employeeHTML(engineer)
-    }
-    html += '</div>'
-    
-html += "</div> </body><script src='https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js'></script></html>";
-fs.writeFile(fileName, html, (err) =>
-err ? console.error(err) : console.log("An Index.html is created!"));
-} 
+// Generates engineer card
+const generateEngineer = engineerTitle => { return engineerTitle.map(engineer => {
+    return `<div class="col">
+    <div class="card shadow-lg" style="width: 18rem;">
+        <div class="card-body identity">
+            <h5 class="card-title">${engineer.getName()}</h5>
+            <h6 class="card-title"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-wrench" viewBox="0 0 16 16">
+                <path d="M.102 2.223A3.004 3.004 0 0 0 3.78 5.897l6.341 6.252A3.003 3.003 0 0 0 13 16a3 3 0 1 0-.851-5.878L5.897 3.781A3.004 3.004 0 0 0 2.223.1l2.141 2.142L4 4l-1.757.364L.102 2.223zm13.37 9.019.528.026.287.445.445.287.026.529L15 13l-.242.471-.026.529-.445.287-.287.445-.529.026L13 15l-.471-.242-.529-.026-.287-.445-.445-.287-.026-.529L11 13l.242-.471.026-.529.445-.287.287-.445.529-.026L13 11l.471.242z"/>
+              </svg>  Engineer</h6>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Id: ${engineer.getId()}</li>
+            <li class="list-group-item">Email: <a href="mailto:">${engineer.getEmail()}</a></li>
+            <li class="list-group-item">GitHub: <a target="_blank" href="https://github.com/${engineer.getGithub()}">${engineer.getGithub()}</a></li>
+        </ul>
+    </div>
+</div>`
+}).join('');
+};
 
-function employeeHTML(employee) {
-    let html = `
-    <div class="col"><div class="card shadow p-3 mb-5 bg-body rounded"><div class="card-body">
-    <h3 class="card-title">${employee.getName()}</h3>
-    <h6 class="card-subtitle mb-2 text-muted">${employee.getRole()}</h6>
-    <hr class="border border-primary border-2 opacity-50"></hr>
-    <p class="card-text">
-    <small class="text-muted">ID</small><br>
-    ${employee.getId()}
-    </p>
-    <p class="card-text">
-    <small class="text-muted">E-mail</small><br>
-    ${employee.getEmail()}
-    </p>
-    `;
-    if (employee.getRole() === "Manager") {
-        html += `<p class="card-text">
-        <small class="text-muted">OFFICE</small><br>
-        ${employee.officeNumber}
-        </p>`;
- } else if (employee.getRole() === "Intern") {
-    html += `<p class="card-text">
-    <small class="text-muted">SCHOOL</small><br>
-    ${employee.school}
-    </p>`;
-} else if (employee.getRole() === "Engineer") {
-    html += `<p class="card-text">
-    <small class="text-muted">GITHUB</small><br>
-    ${employee.github}
-    </p>`;
-}
-html += `</div></div></div>`;
-return html;
-}
+// Generates cards for each member of the team
+const generateCards = teamArray => {
+      // An array to store the HTML strings for each card
+    let cardsArray = [];
+      // Filter the team array to get only the managers
+    const managerTitle = teamArray.filter(team => {
+        return team.getRole() === 'Manager';
+    });
+    const engineerTitle = teamArray.filter(team => {
+        return team.getRole() === 'Engineer';
+    });
+    const internTitle = teamArray.filter(team => {
+        return team.getRole() === 'Intern';
+    });
+      // If there are any managers, push their HTML strings to the cardsArray
+    if (managerTitle) {
+        cardsArray.push(generateManager(managerTitle));
+    } 
+    if (engineerTitle) {
+        cardsArray.push(generateEngineer(engineerTitle));
+    } 
+    if (internTitle) {
+        cardsArray.push(generateIntern(internTitle));
+    }
+    return cardsArray.join('');
+    };
 
-module.exports = { generateHTML, dataTest };
+    // Generates HTML Page
+module.exports = cardsArray => {
+    return ` 
+    <!DOCTYPE html>
+  <html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="ie=edge">
+      <title>My Team</title>
+      <link rel="stylesheet" type="text/css" href="style.css">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+          integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+  </head>
+  <body>
+      <header>
+          <h1>My Team</h1>
+      </header>
+      <main class="container my-5">
+          <div class="row">
+              ${generateCards(cardsArray)}
+          </div>
+      </main>
+  </body>
+  </html>
+      `;
+    };
+
+
