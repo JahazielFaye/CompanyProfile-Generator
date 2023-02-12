@@ -117,7 +117,7 @@ module.exports = cardsArray => {
           integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
   </head>
   <body>
-      <header>
+      <header style="back">
           <h1>My Team</h1>
       </header>
       <main class="container my-5">

@@ -1,10 +1,10 @@
 // ImportingPackages
 const fs = require('fs');
 const inquirer = require('inquirer');
-const generateHTML = require('./src/generateHtmlPage');
-const Manager = require('./lib/Manager');
-const Intern = require('./lib/Intern');
-const Engineer = require('./lib/Engineer');
+const generateHTML = require('./src/renderhtml');
+const Manager = require('./lib/manager');
+const Intern = require('./lib/intern');
+const Engineer = require('./lib/engineer');
 
 // A class representing a prompt for creating employee objects
 class Prompt {
@@ -17,10 +17,9 @@ class Prompt {
     getTeamArray() {
       return this.teamArray;
     }
-  };
-  
+      
   // Questions
-questions(); {
+questions() {
     inquirer.prompt(
     {
      type: 'list',
@@ -235,11 +234,15 @@ questions(); {
 });
 
 }
+};
+
+
 
 // Creates an instance of the Prompt class
 const prompt = new Prompt();
-
 prompt.questions();
+
 module.exports = Prompt;
 
 
+  
