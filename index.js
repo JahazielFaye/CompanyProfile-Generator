@@ -33,7 +33,7 @@ questions() {
     {
      type: 'input',
      name: 'name',
-     message: "First, Please Enter The Manager's Name",
+     message: "First, Please Enter The Manager's Name:",
      validate: nameInput => {
          if (nameInput) {
              return true;
@@ -46,7 +46,7 @@ questions() {
     {
         type: 'number',
         name: 'id',
-        message: "Please enter the manager's employee id",
+        message: "Please enter the manager's employee id:",
         validate: idInput => {
             if (idInput) {
                 return true;
@@ -59,7 +59,7 @@ questions() {
     {
         type: 'input',
         name: 'email',
-        message: "Please enter the manager's email",
+        message: "Please enter the manager's email:",
         validate: emailInput => {
             if (emailInput) {
                 return true;
@@ -72,7 +72,7 @@ questions() {
     {
         type: 'number',
         name: 'officeNumber',
-        message: "Please enter the manager's office number",
+        message: "Please enter the manager's office number:",
         validate: officeNumberInput => {
             if (officeNumberInput) {
                 return true;
@@ -101,7 +101,7 @@ questions() {
             {
              type: 'input',
              name: 'name',
-             message: "Please enter the engineer's name",
+             message: "Please enter the engineer's name:",
              validate: nameInput => {
                 if (nameInput) {
                     return true;
@@ -114,7 +114,7 @@ questions() {
             {
              type: 'number',
              name: 'id',
-             message: "Please enter the engineer's employee id",
+             message: "Please enter the engineer's employee id:",
              validate: idInput => {
                 if (idInput) {
                     return true;
@@ -127,7 +127,7 @@ questions() {
             {
              type: 'input',
              name: 'email',
-             message: "Please enter the engineer's email",
+             message: "Please enter the engineer's email:",
              validate: emailInput => {
                 if (emailInput) {
                     return true;
@@ -140,7 +140,7 @@ questions() {
             {
              type: 'input',
              name: 'github',
-             message: "Please enter the engineer's github username",
+             message: "Please enter the engineer's github username:",
              validate: githubInput => {
                 if (githubInput) {
                     return true;
@@ -164,7 +164,7 @@ questions() {
             {
              type: 'input',
              name: 'name',
-             message: "Please enter the intern's name",
+             message: "Please enter the intern's name:",
              validate: nameInput => {
                 if (nameInput) {
                     return true;
@@ -177,7 +177,7 @@ questions() {
             {
              type: 'number',
              name: 'id',
-             message: "Please enter the intern's employee id",
+             message: "Please enter the intern's employee id:",
              validate: idInput => {
                 if (idInput) {
                     return true;
@@ -190,7 +190,7 @@ questions() {
             {
              type: 'input',
              name: 'email',
-             message: "Please enter the intern's email",
+             message: "Please enter the intern's email:",
              validate: emailInput => {
                 if (emailInput) {
                     return true;
@@ -203,7 +203,7 @@ questions() {
             {
              type: 'input',
              name: 'school',
-             message: "Please enter the intern's school name",
+             message: "Please enter the intern's school name:",
              validate: schoolInput => {
                 if (schoolInput) {
                     return true;
@@ -222,7 +222,7 @@ questions() {
             this.questions();
         });
 
-    } else if (employeeType === 'I finished entering my team info') {
+    } else if (employeeType === 'Done, With My Team Building!') {
         //function that writes the html file in the dist folder
         const pagehtml = generateHTML(this.getTeamArray());
         fs.writeFile('./dist/index.html', pagehtml, err => {
