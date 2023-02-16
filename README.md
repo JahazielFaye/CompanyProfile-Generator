@@ -54,7 +54,7 @@ When you are finished building your team, the application will exit, and an HTML
 ## Demo Video & HTML Image Snippet
 
 
-![Example Screenshot](src\screenshot.png)
+![Example Screenshot](src/screenshot.png)
 
 
  Demo Video that demonstrate how to use the application to generate the Company Profile, and how to use the HTML file to view the roster and access team member information.
