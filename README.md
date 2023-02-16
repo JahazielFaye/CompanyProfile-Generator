@@ -29,11 +29,14 @@ Replace <repository-url> with the URL of the repository that you want to clone.
 
 **This Challenge will require the use of the Inquirer package.** To ensure that you install and use Inquirer version 8.2.4, run the following command in your project folder:
 
-npm init
+**npm init**
+
 **npm i inquirer@8.2.4**
 
 **Tests have been setup with jest**. In order to run the test, use the following command:
+
 **npm i jest.**
+
 Then at the root of the folder, invoke the tests by using the following command:
 
 **npm test.**
@@ -48,10 +51,12 @@ You will be prompted to enter the team manager's information. After entering the
 
 When you are finished building your team, the application will exit, and an HTML file will be generated.
 
-## Demo Video
+## Demo Video & Image Snippet
+![Screenshot](dist\Screenshot.png)
+
 
  Demo Video that demonstrate how to use the application to generate the Company Profile, and how to use the HTML file to view the roster and access team member information.
  click the link below :
- 
+
 
  https://drive.google.com/file/d/15qvCw1dSH-uS1ZiRM6bdb-GZAqZ59L7l/view?usp=sharing
