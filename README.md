@@ -52,7 +52,7 @@ You will be prompted to enter the team manager's information. After entering the
 When you are finished building your team, the application will exit, and an HTML file will be generated.
 
 ## Demo Video & Image Snippet
-![Example Screenshot](./dist/Screenshot.png)
+![Example Screenshot](C:\Users\zxiel\Downloads\School\UCF-Challenges\CompanyProfile-Generator\dist\Screenshot.png)
 
 
 
