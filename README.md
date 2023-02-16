@@ -51,12 +51,7 @@ You will be prompted to enter the team manager's information. After entering the
 
 When you are finished building your team, the application will exit, and an HTML file will be generated.
 
-## Demo Video & Image Snippet
-![Example Screenshot](dist\Screenshot.png)
-
-
-
-
+## Demo Video 
 
  Demo Video that demonstrate how to use the application to generate the Company Profile, and how to use the HTML file to view the roster and access team member information.
  click the link below :
