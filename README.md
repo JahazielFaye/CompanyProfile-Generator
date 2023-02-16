@@ -52,7 +52,8 @@ You will be prompted to enter the team manager's information. After entering the
 When you are finished building your team, the application will exit, and an HTML file will be generated.
 
 ## Demo Video & Image Snippet
-![Screenshot](./dist/Screenshot%20.png)
+![Example Screenshot](./dist/Screenshot.png)
+
 
 
 
